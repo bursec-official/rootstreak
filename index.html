@@ -3,30 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BURSEC PROJECT</title>
-<meta name="description" content="Ciberseguridad, sistemas y empresa en formato feed: teoría, preguntas, XP, niveles y rachas.">
-<meta name="theme-color" content="#0a0e13">
+<title>ROOTSTREAK · Aprende ciberseguridad en vez de hacer scroll</title>
+<meta name="description" content="Ciberseguridad, sistemas y empresa: teoría desde cero, preguntas, exámenes, XP, niveles y rachas.">
+<meta name="theme-color" content="#09090a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="BURSEC">
+<meta name="apple-mobile-web-app-title" content="ROOTSTREAK">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css?v=1795527276">
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=1795530176">
 </head>
 <body>
-<div id="app">
-  <header class="top"><div class="brand">BURSEC <span>PROJECT</span></div><div class="hud" id="hud"></div><div class="lvlrow" id="lvlrow"></div></header>
-  <main></main>
-  <nav class="tabs">
-    <button data-t="feed" class="on"><span class="ic">⚡</span>Feed</button>
-    <button data-t="learn"><span class="ic">📚</span>Teoría</button>
-    <button data-t="chal"><span class="ic">🏆</span>Retos</button>
-    <button data-t="me"><span class="ic">👤</span>Perfil</button>
-  </nav>
+<div class="layout">
+  <aside class="side">
+    <div class="logo logo-slot"></div>
+    <div class="nav" id="sidenav"></div>
+    <div class="foot" id="sidegoal"></div>
+  </aside>
+  <div class="main">
+    <header class="topbar"><div class="logo logo-slot"></div><span class="sp"></span><div class="row" id="tbstats"></div></header>
+    <div class="content"></div>
+    <nav class="tabs" id="tabs"></nav>
+  </div>
 </div>
-<script src="data.js?v=1795527276"></script>
-<script src="app.js?v=1795527276"></script>
+<script src="icons.js?v=1795530176"></script>
+<script src="data.js?v=1795530176"></script>
+<script src="app.js?v=1795530176"></script>
 </body>
 </html>

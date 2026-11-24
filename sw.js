@@ -1,5 +1,5 @@
-const C='bursec-1795527276';
-const FILES=['./','index.html','styles.css?v=1795527276','data.js?v=1795527276','app.js?v=1795527276','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
+const C='rootstreak-1795530176';
+const FILES=['./','index.html','styles.css?v=1795530176','data.js?v=1795530176','app.js?v=1795530176','icons.js?v=1795530176','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png','fonts/cormorant-garamond-latin-700-normal.woff2','fonts/inter-latin-400-normal.woff2','fonts/inter-latin-500-normal.woff2','fonts/inter-latin-600-normal.woff2','fonts/inter-latin-700-normal.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{ if(e.request.method!=='GET') return;
