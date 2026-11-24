@@ -18,8 +18,7 @@ const rnd=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return(h>>>0).toString(36);}
 const tileCls=t=>(AREA[t.area]||AREAS[0]).cls;
-let gid=0;
-function crest(cls='mark'){const g='cg'+(gid++);return `<svg class="${cls}" viewBox="0 0 100 112" aria-hidden="true"><defs><linearGradient id="${g}" x1=".15" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#fbeec8"/><stop offset=".38" stop-color="#e2c07a"/><stop offset=".72" stop-color="#b8893f"/><stop offset="1" stop-color="#7a5a26"/></linearGradient></defs><path d="M50 4 L94 18.5 V58 C94 86 76 102 50 108 C24 102 6 86 6 58 V18.5 Z" fill="#0e0d0b" stroke="url(#${g})" stroke-width="4.5" stroke-linejoin="round"/><path d="M50 12 L86.5 24 V58 C86.5 81 72 95 50 100.5 C28 95 13.5 81 13.5 58 V24 Z" fill="none" stroke="url(#${g})" stroke-width="1" opacity=".55"/><text x="50" y="76" text-anchor="middle" font-family="Cormorant,Georgia,serif" font-weight="700" font-size="56" fill="url(#${g})">R</text><path d="M50 18 l2.6 4.9 4.9 2.6 -4.9 2.6 -2.6 4.9 -2.6 -4.9 -4.9 -2.6 4.9 -2.6 z" fill="url(#${g})"/></svg>`;}
+function crest(cls='mark'){return `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 5 C55 19 70 28 75 44 C80 60 74 80 60 89 C55 92 45 93 40 91 C25 86 19 70 23 55 C26 44 33 38 36 30 C38 37 41 41 46 43 C42 30 44 16 50 5 Z" fill="currentColor"/><path d="M39 55 L51 64.5 L39 74" fill="none" stroke="var(--markcut)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 74 H63" stroke="var(--markcut)" stroke-width="7.5" stroke-linecap="round"/></svg>`;}
 
 /* ---------- content index ---------- */
 const QS=[],LESSONS=[],KEYS=[],TMAP={};
@@ -49,7 +48,7 @@ function beep(type){if(!S.sound)return;try{AC||=new(window.AudioContext||window.
  const t0=AC.currentTime;o.type='sine';g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.1,t0+.01);seq.forEach(([f,t])=>o.frequency.setValueAtTime(f,t0+t));const end=t0+seq[seq.length-1][1]+.14;g.gain.exponentialRampToValueAtTime(.0001,end);o.start(t0);o.stop(end+.02);
  if(navigator.vibrate)navigator.vibrate(type==='bad'?[30,40,30]:15);}catch(e){}}
 function confetti(n=110){const c=document.createElement('canvas');c.id='fx';document.body.appendChild(c);const x=c.getContext('2d'),dpr=devicePixelRatio||1,W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';
- const cols=['#059669','#2563eb','#d97706','#ea580c','#7c3aed','#10b981'];const P=[...Array(n)].map(()=>({x:W/2,y:H*.4,vx:(Math.random()-.5)*W*.028,vy:-Math.random()*H*.028-H*.008,s:(4+Math.random()*5)*dpr,c:rnd(cols),r:Math.random()*6,vr:(Math.random()-.5)*.3}));
+ const cols=['#ff7a1a','#ffb020','#34c38f','#7aa7ff','#f472b6','#ffffff'];const P=[...Array(n)].map(()=>({x:W/2,y:H*.4,vx:(Math.random()-.5)*W*.028,vy:-Math.random()*H*.028-H*.008,s:(4+Math.random()*5)*dpr,c:rnd(cols),r:Math.random()*6,vr:(Math.random()-.5)*.3}));
  let f=0;(function loop(){x.clearRect(0,0,W,H);P.forEach(p=>{p.vy+=H*.0009;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/3,p.s,p.s*.66);x.restore();});if(++f<100)requestAnimationFrame(loop);else c.remove();})();}
 function toast(msg,icon='circle-check'){$$('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast';t.innerHTML=ic(icon,18)+'<span>'+msg+'</span>';document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
 function floatText(txt){const d=document.createElement('div');d.className='float';d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),900);}
@@ -315,7 +314,7 @@ function vSettings(){W(`<h1>Ajustes</h1><p class="sub">Personaliza ${APP} y pasa
  <div class="card">
   <div class="set"><div><div class="t">Objetivo diario</div><div class="d">XP que quieres ganar cada día para mantener la racha</div></div><select id="goal">${[30,50,100,150,250].map(v=>`<option ${v===S.goal?'selected':''} value="${v}">${v} XP</option>`).join('')}</select></div>
   <div class="set"><div><div class="t">Vista</div><div class="d">Automática según la pantalla, o fija de ordenador o de móvil</div></div><select id="lay"><option value="auto" ${S.layout==='auto'?'selected':''}>Automática</option><option value="desk" ${S.layout==='desk'?'selected':''}>Ordenador</option><option value="mob" ${S.layout==='mob'?'selected':''}>Móvil</option></select></div>
-  <div class="set"><div><div class="t">Apariencia</div><div class="d">Noche (negro y oro), Marfil (claro) o la del sistema</div></div><select id="theme"><option value="dark" ${S.theme==='dark'?'selected':''}>Noche</option><option value="light" ${S.theme==='light'?'selected':''}>Marfil</option><option value="system" ${S.theme==='system'?'selected':''}>Sistema</option></select></div>
+  <div class="set"><div><div class="t">Apariencia</div><div class="d">Oscuro, claro o la del sistema</div></div><select id="theme"><option value="dark" ${S.theme==='dark'?'selected':''}>Oscuro</option><option value="light" ${S.theme==='light'?'selected':''}>Claro</option><option value="system" ${S.theme==='system'?'selected':''}>Sistema</option></select></div>
   <div class="set"><div><div class="t">Sonido y vibración</div><div class="d">Al acertar, fallar y subir de nivel</div></div><select id="snd"><option value="1">Activado</option><option value="0" ${S.sound?'':'selected'}>Desactivado</option></select></div>
  </div>
  <h2>Sincronizar iPhone y Mac</h2><div class="card pad"><p class="sub">Copia tu código en un dispositivo y pégalo en el otro. El progreso se fusiona: nunca pierdes XP ni lecciones.</p><div class="row" style="flex-wrap:wrap"><button class="btn" id="exp">${ic('copy',16)} Copiar mi código</button><button class="btn" id="imp">${ic('clipboard-paste',16)} Pegar un código</button></div><div id="sync"></div></div>
@@ -339,7 +338,7 @@ function merge(o){S.xp=Math.max(S.xp,o.xp||0);S.bestStreak=Math.max(S.bestStreak
 
 /* ---------- boot ---------- */
 const mq=window.matchMedia('(prefers-color-scheme: dark)');
-function applyTheme(){const dark=S.theme==='dark'||(S.theme==='system'&&mq.matches);document.documentElement.classList.toggle('light',!dark);const m=$('meta[name=theme-color]');if(m)m.content=dark?'#09090a':'#f6f2ea';}
+function applyTheme(){const dark=S.theme==='dark'||(S.theme==='system'&&mq.matches);document.documentElement.classList.toggle('light',!dark);const m=$('meta[name=theme-color]');if(m)m.content=dark?'#0c0d10':'#f5f6f8';}
 const wide=window.matchMedia('(min-width: 900px)');
 function layoutMode(){return S.layout==='desk'||S.layout==='mob'?S.layout:(wide.matches?'desk':'mob');}
 function applyLayout(){const m=layoutMode();const h=document.documentElement;h.classList.toggle('desk',m==='desk');h.classList.toggle('mob',m==='mob');if($('.content'))render();}
@@ -348,7 +347,7 @@ mq.addEventListener&&mq.addEventListener('change',applyTheme);applyTheme();
 $('#sidenav').innerHTML=NAV.map(([k,i,t])=>`<button data-nav="${k}">${ic(i,20)}<span>${t}</span></button>`).join('');
 $('#tabs').innerHTML=NAV.map(([k,i,t])=>`<button data-nav="${k}">${ic(i,22)}<span>${t}</span></button>`).join('');
 $$('[data-nav]').forEach(b=>b.onclick=()=>go(b.dataset.nav));
-$$('.logo-slot').forEach(e=>e.innerHTML=crest()+'<span class="wm">ROOTSTREAK</span>');
+$$('.logo-slot').forEach(e=>e.innerHTML=crest()+'<span class="wm">ROOT<b>STREAK</b></span>');
 $('#sidenav').insertAdjacentHTML('beforebegin','<div class="navlbl">Menú</div>');
 applyLayout();checkAch();
 if(!S.welcomed3){S.welcomed3=true;save();setTimeout(()=>modal('crest','','Bienvenido a '+APP,'Cambia el scroll infinito por aprender ciberseguridad, sistemas y empresa.<br><br>Lee la <b>teoría</b>, <b>practica</b> con preguntas, gana XP y no rompas tu racha.','Empezar'),300);}
